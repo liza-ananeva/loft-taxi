@@ -1,26 +1,37 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Header from './components/Header';
+import Login from './components/Login';
+import Signup from './components/Signup';
+import Map from './components/Map';
+import Profile from './components/Profile';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+    state = { currentPage: 'login' }
+
+    navigateTo = (page) => {
+        this.setState({ currentPage: page });
+    }
+
+    pages = {
+        login: <Login navigateTo={this.navigateTo} />,
+        signup: <Signup navigateTo={this.navigateTo} />,
+        map: <Map />,
+        profile: <Profile />
+    }
+
+    render() {
+        const { currentPage } = this.state;
+        const navItems = Object.keys(this.pages);
+
+        return (
+            <>
+                <Header navItems={navItems} navigateTo={this.navigateTo} />
+                <main>
+                    <section>{this.pages[currentPage]}</section>
+                </main>
+            </>
+        );
+    }
 }
 
 export default App;
