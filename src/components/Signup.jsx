@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 
-class Signup extends React.Component {
+class Signup extends PureComponent {
     state = {
         email: '',
         firstName: '',

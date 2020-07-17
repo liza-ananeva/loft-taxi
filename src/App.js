@@ -1,37 +1,56 @@
-import React from 'react';
-import Header from './components/Header';
-import Login from './components/Login';
+import React, { PureComponent } from 'react';
+import { withAuth } from './AuthContext'
+import { HeaderWithAuth } from './components/Header';
+import { LoginWithAuth } from './components/Login';
 import Signup from './components/Signup';
-import Map from './components/Map';
-import Profile from './components/Profile';
+import { Map } from './components/Map';
+import { Profile } from './components/Profile';
 
-class App extends React.Component {
-    state = { currentPage: 'login' }
-
-    navigateTo = (page) => {
-        this.setState({ currentPage: page });
+class App extends PureComponent {
+    state = {
+        currentPage: 'login',
+        isShowHeader: false
     }
 
     pages = {
-        login: <Login navigateTo={this.navigateTo} />,
-        signup: <Signup navigateTo={this.navigateTo} />,
-        map: <Map />,
-        profile: <Profile />
+        login: (props) => <LoginWithAuth {...props}/>,
+        signup: (props) => <Signup {...props}/>,
+        map: (props) => <Map {...props}/>,
+        profile: (props) => <Profile {...props}/>
+    }
+
+    navigateTo = (page) => {
+        this.props.isLoggedIn
+        ? this.setState({ currentPage: page })
+        : this.setState({ currentPage: 'login' });
+    }
+
+    toggleHeader = () => {
+        this.props.isLoggedIn
+        ? this.setState({ isShowHeader: true })
+        : this.setState({ isShowHeader: false });
+    }
+
+    componentDidMount() {
+        this.toggleHeader();
+    }
+
+    componentDidUpdate() {
+        this.toggleHeader();
     }
 
     render() {
-        const { currentPage } = this.state;
-        const navItems = Object.keys(this.pages);
+        const { currentPage, isShowHeader } = this.state;
 
         return (
             <>
-                <Header navItems={navItems} navigateTo={this.navigateTo} />
+                {isShowHeader && (<HeaderWithAuth show={isShowHeader} navigateTo={this.navigateTo}/>)}
                 <main>
-                    <section>{this.pages[currentPage]}</section>
+                    {this.pages[currentPage]({navigate: this.navigateTo})}
                 </main>
             </>
         );
     }
 }
 
-export default App;
+export default withAuth(App);

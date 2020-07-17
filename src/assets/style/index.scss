@@ -11,3 +11,26 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
         monospace;
 }
+
+#root {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+.wrapper {
+    position: relative;
+    height: 100%;
+}
+
+section {
+    height: 100%;
+}
+
+@import "./login.scss";
+@import "./form.scss";
+@import "./map.scss";

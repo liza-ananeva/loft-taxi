@@ -1,9 +1,7 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 
-class Profile extends React.Component {
+export class Profile extends PureComponent {
     render() {
         return <>Профиль</>;
     }
 }
-
-export default Profile;
