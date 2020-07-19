@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { withAuth } from './AuthContext'
+import { withAuth } from './AuthContext';
 import { HeaderWithAuth } from './components/Header';
 import { LoginWithAuth } from './components/Login';
 import Signup from './components/Signup';
@@ -8,45 +8,39 @@ import { Profile } from './components/Profile';
 
 class App extends PureComponent {
     state = {
-        currentPage: 'login',
-        isShowHeader: false
+        currentPage: 'login'
     }
 
     pages = {
-        login: (props) => <LoginWithAuth {...props}/>,
-        signup: (props) => <Signup {...props}/>,
-        map: (props) => <Map {...props}/>,
-        profile: (props) => <Profile {...props}/>
+        login: (props) => <LoginWithAuth {...props} />,
+        signup: (props) => <Signup {...props} />,
+        map: (props) => <Map {...props} />,
+        profile: (props) => <Profile {...props} />
     }
 
     navigateTo = (page) => {
-        this.props.isLoggedIn
-        ? this.setState({ currentPage: page })
-        : this.setState({ currentPage: 'login' });
+        const { isLoggedIn } = this.props;
+        
+        this.setState({ currentPage: isLoggedIn ? page : 'login' });
     }
 
-    toggleHeader = () => {
-        this.props.isLoggedIn
-        ? this.setState({ isShowHeader: true })
-        : this.setState({ isShowHeader: false });
-    }
+    componentDidUpdate(prevProps) {
+        const { currentPage } = this.state;
 
-    componentDidMount() {
-        this.toggleHeader();
-    }
-
-    componentDidUpdate() {
-        this.toggleHeader();
+        if (currentPage === 'login' && !prevProps.isLoggedIn) {
+            this.setState({ currentPage: 'map' });
+        }
     }
 
     render() {
-        const { currentPage, isShowHeader } = this.state;
+        const { currentPage } = this.state;
+        const { isLoggedIn } = this.props;
 
         return (
             <>
-                {isShowHeader && (<HeaderWithAuth show={isShowHeader} navigateTo={this.navigateTo}/>)}
+                {isLoggedIn && <HeaderWithAuth navigateTo={this.navigateTo} />}
                 <main>
-                    {this.pages[currentPage]({navigate: this.navigateTo})}
+                    {this.pages[currentPage]({ navigate: this.navigateTo })}
                 </main>
             </>
         );

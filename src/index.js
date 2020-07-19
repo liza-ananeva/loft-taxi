@@ -2,15 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { AuthProvider } from './AuthContext';
-
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import { theme } from 'loft-taxi-mui-theme';
 import './assets/style/index.scss';
 import * as serviceWorker from './serviceWorker';
 
-import { MuiThemeProvider } from '@material-ui/core/styles';
-import { theme } from 'loft-taxi-mui-theme';
-
 ReactDOM.render(
-    
     <React.StrictMode>
         <MuiThemeProvider theme={theme}>
             <AuthProvider>

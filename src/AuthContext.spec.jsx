@@ -21,7 +21,7 @@ describe('AuthContext', () => {
                     </AuthContext.Consumer>
                 </AuthProvider>
             );
-            
+
             expect(isLoggedIn).toBe(false);
             act(() => {
                 login('test@test.com', '123123');
@@ -47,7 +47,7 @@ describe('AuthContext', () => {
                     </AuthContext.Consumer>
                 </AuthProvider>
             );
-            
+
             // expect(isLoggedIn).toBe(true);
             act(() => {
                 logout();

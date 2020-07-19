@@ -7,37 +7,43 @@ import { styled } from '@material-ui/core/styles';
 
 class Header extends PureComponent {
     static propTypes = {
-        show: PropTypes.bool,
         navigateTo: PropTypes.func
     }
 
     unauthenticate = (event) => {
         event.preventDefault();
-        this.props.logout();
-        this.props.navigateTo('login');
+        
+        const { logout, navigateTo } = this.props;
+        
+        logout();
+        navigateTo('login');
     }
 
     render() {
-        const { show, navigateTo } = this.props;
+        const { navigateTo } = this.props;
 
-        return show
-        ? (
+        return (
             <StyledToolbar>
-                <Logo/>
+                <Logo />
                 <div>
-                    <Button size='medium' onClick={() => navigateTo('map')}>Карта</Button>
-                    <Button size='medium' onClick={() => navigateTo('profile')}>Профиль</Button>
-                    <Button size='medium' onClick={this.unauthenticate}>Выйти</Button>
+                    <Button size='medium' onClick={() => navigateTo('map')}>
+                        Карта
+                    </Button>
+                    <Button size='medium' onClick={() => navigateTo('profile')}>
+                        Профиль
+                    </Button>
+                    <Button size='medium' onClick={this.unauthenticate}>
+                        Выйти
+                    </Button>
                 </div>
             </StyledToolbar>
-        )
-        : null;
+        );
     }
 }
 
 export const HeaderWithAuth = withAuth(Header);
 
 const StyledToolbar = styled(Toolbar)({
-    height: '69.39px',
+    height: '70px',
     justifyContent: 'space-between'
 });
