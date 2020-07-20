@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logout } from '../actions';
+import { Link } from 'react-router-dom';
 import { Toolbar, Button } from '@material-ui/core';
 import { Logo } from 'loft-taxi-mui-theme';
 import { styled } from '@material-ui/core/styles';
@@ -14,10 +15,9 @@ class Header extends PureComponent {
     unauthenticate = (event) => {
         event.preventDefault();
         
-        const { logout, navigateTo } = this.props;
+        const { logout } = this.props;
         
         logout();
-        navigateTo('login');
     }
 
     render() {
@@ -27,6 +27,8 @@ class Header extends PureComponent {
             <StyledToolbar>
                 <Logo />
                 <div>
+                    {/* <Link to='/map'>Карта</Link>
+                    <Link to='/profile'>Профиль</Link> */}
                     <Button size='medium' onClick={() => navigateTo('map')}>
                         Карта
                     </Button>
@@ -42,7 +44,7 @@ class Header extends PureComponent {
     }
 }
 
-export const HeaderWithAuth = connect(
+export const HeaderWithConnect = connect(
     null,
     { logout }
 )

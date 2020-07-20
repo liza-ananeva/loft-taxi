@@ -12,12 +12,17 @@ class Login extends PureComponent {
     }
 
     authenticate = (event) => {
+        // debugger
         event.preventDefault();
         
         const { email, password } = this.state;
         const { authenticate } = this.props;
-        console.log('authenticate', email, password);
         authenticate(email, password);
+        
+        console.log('email, password: ', email, password);
+        console.log('authenticate', authenticate);
+        console.log('authenticate(email, password): ', authenticate(email, password));
+        console.log('this.props.isLoggedIn: ', this.props.isLoggedIn);
     }
 
     handleChange = (event) => {
@@ -70,7 +75,7 @@ class Login extends PureComponent {
     }
 }
 
-export const LoginWithAuth = connect(
+export const LoginWithConnect = connect(
     (state) => ({isLoggedIn: state.auth.isLoggedIn}),
     { authenticate }
 )(Login);
