@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { withAuth } from '../AuthContext';
+import { connect } from 'react-redux';
+import { logout } from '../actions';
 import { Toolbar, Button } from '@material-ui/core';
 import { Logo } from 'loft-taxi-mui-theme';
 import { styled } from '@material-ui/core/styles';
@@ -41,7 +42,11 @@ class Header extends PureComponent {
     }
 }
 
-export const HeaderWithAuth = withAuth(Header);
+export const HeaderWithAuth = connect(
+    null,
+    { logout }
+)
+(Header);
 
 const StyledToolbar = styled(Toolbar)({
     height: '70px',

@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { withAuth } from './AuthContext';
+import { connect } from 'react-redux';
 import { HeaderWithAuth } from './components/Header';
 import { LoginWithAuth } from './components/Login';
 import Signup from './components/Signup';
@@ -25,6 +25,7 @@ class App extends PureComponent {
     }
 
     componentDidUpdate(prevProps) {
+        console.log('componentDidUpdate');
         const { currentPage } = this.state;
 
         if (currentPage === 'login' && !prevProps.isLoggedIn) {
@@ -35,6 +36,9 @@ class App extends PureComponent {
     render() {
         const { currentPage } = this.state;
         const { isLoggedIn } = this.props;
+
+        console.log('currentPage: ', currentPage);
+        console.log('isLoggedIn: ', isLoggedIn);
 
         return (
             <>
@@ -47,4 +51,7 @@ class App extends PureComponent {
     }
 }
 
-export default withAuth(App);
+export default connect(
+    (state) => ({isLoggedIn: state.auth.isLoggedIn})
+)
+(App);
