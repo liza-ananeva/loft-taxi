@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { authenticate } from '../actions';
+import { login } from '../actions';
 import { Typography, Link, TextField, Button } from '@material-ui/core';
 import { Logo } from 'loft-taxi-mui-theme';
 import { styled } from '@material-ui/core/styles';
@@ -12,17 +12,12 @@ class Login extends PureComponent {
     }
 
     authenticate = (event) => {
-        // debugger
         event.preventDefault();
         
         const { email, password } = this.state;
-        const { authenticate } = this.props;
-        authenticate(email, password);
+        const { login } = this.props;
         
-        console.log('email, password: ', email, password);
-        console.log('authenticate', authenticate);
-        console.log('authenticate(email, password): ', authenticate(email, password));
-        console.log('this.props.isLoggedIn: ', this.props.isLoggedIn);
+        login(email, password);
     }
 
     handleChange = (event) => {
@@ -77,7 +72,7 @@ class Login extends PureComponent {
 
 export const LoginWithConnect = connect(
     (state) => ({isLoggedIn: state.auth.isLoggedIn}),
-    { authenticate }
+    { login }
 )(Login);
 
 const StyledTypographyTitle = styled(Typography)({

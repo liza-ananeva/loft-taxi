@@ -1,22 +1,19 @@
-import { LOGIN, LOGOUT } from '../actions';
+import { LOGIN, LOGIN_SUCCESS, LOGOUT } from '../actions';
 
 const initialState = {
-    isLoggedIn: false
+    isLoggedIn: false,
+    isLoading: false
 }
 
 export default function(state = initialState, action) {
     switch(action.type) {
-        case LOGIN: {
-            console.log('LOGIN');
-            return { isLoggedIn: true }
-        }
-        case LOGOUT: {
-            console.log('LOGOUT');
-            return { isLoggedIn: false }
-        }
-        default: {
-            console.log('default');
+        case LOGIN:
+            return { ...state, isLoading: true }
+        case LOGIN_SUCCESS:
+            return { ...state, isLoggedIn: true }
+        case LOGOUT:
+            return { ...state, isLoggedIn: false }
+        default:
             return state;
-        }
     }
 }

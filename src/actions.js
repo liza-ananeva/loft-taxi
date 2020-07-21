@@ -1,10 +1,14 @@
-export const LOGIN = 'LOGIN';
-export const LOGOUT = 'LOGOUT';
-export const AUTHENTICATE = 'AUTHENTICATE';
+export const LOGIN = "LOGIN";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAILURE = "LOGIN_FAILURE";
 
-export const login = () => ({type: LOGIN});
-export const logout = () => ({type: LOGOUT});
-export const authenticate = (email, password) => ({
-    type: AUTHENTICATE, 
-    payload: {email, password}
+export const LOGOUT = "LOGOUT";
+
+export const login = (email, password) => ({
+    type: LOGIN,
+    payload: { email, password }
 });
+  
+export const loginSuccess = () => ({ type: LOGIN_SUCCESS });
+  
+export const logout = () => ({ type: LOGOUT });
