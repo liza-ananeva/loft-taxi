@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { HeaderWithConnect } from './components/Header';
 import { LoginWithConnect } from './components/Login';
-import { Switch, Route } from 'react-router-dom';
-import { PrivateRoute } from './PrivateRoute';
-// import Signup from './components/Signup';
-import { Map } from './components/Map';
-import { Profile } from './components/Profile';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import PrivateRoute from './PrivateRoute';
+import Signup from './components/Signup';
+import Map from './components/Map';
+import Profile from './components/Profile';
+// import { getIsLoggedIn } from './modules/auth/selectors';
 
 class App extends PureComponent {
     static propTypes = {
@@ -20,12 +21,15 @@ class App extends PureComponent {
         return (
             <>
                 {isLoggedIn && <HeaderWithConnect />}
+                {/* <HeaderWithConnect /> */}
                 <main>
                     <Switch>
-                        <Route exact path='/' component={LoginWithConnect} />
+                        <Route exact path='/login' component={LoginWithConnect} />
+                        <Route exact path='/signup' component={Signup} />
                         <PrivateRoute path='/map' component={Map} />
                         <PrivateRoute path='/profile' component={Profile} />
                     </Switch>
+                    <Redirect from='/' to='/login' />
                 </main>
             </>
         );
@@ -36,3 +40,9 @@ export default connect(
     (state) => ({isLoggedIn: state.auth.isLoggedIn})
 )
 (App);
+
+// export default connect(
+//     (state) => {
+//         isLoggedIn: getIsLoggedIn(state)
+//     }
+// )(App);

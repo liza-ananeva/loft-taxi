@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-import rootReducer from './reducers';
-import { authMiddleware } from './authMiddleware';
+import rootReducer from './modules/auth';
+import { authMiddleware } from './modules/auth/authMiddleware';
 
 export const store = createStore(
     rootReducer,

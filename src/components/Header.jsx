@@ -1,10 +1,24 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { logout } from '../actions';
+import { logout } from '../modules/auth/actions';
 import { Link } from 'react-router-dom';
-import { Toolbar, Button } from '@material-ui/core';
+import { AppBar, Toolbar, Button } from '@material-ui/core';
 import { Logo } from 'loft-taxi-mui-theme';
-import { styled } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core';
+
+const styles = theme => ({
+    header: {
+        flex: '0 1 69.39px'
+    },
+    appBar: {
+        height: '69.39px',
+        backgroundColor: '#fff'
+    },
+    toolbar: {
+        height: '100%',
+        justifyContent: 'space-between'
+    }
+});
 
 class Header extends PureComponent {
     unauthenticate = (event) => {
@@ -16,36 +30,39 @@ class Header extends PureComponent {
     }
 
     render() {
+        const { header, appBar, toolbar } = this.props.classes;
+
         return (
-            <StyledToolbar>
-                <Logo />
-                <div>
-                    <Link to='/map' className='link'>
-                        <Button size='medium'>
-                            Карта
-                        </Button>
-                    </Link>
-                    <Link to='/profile' className='link'>
-                        <Button size='medium'>
-                            Профиль
-                        </Button>
-                    </Link>
-                    <Button size='medium' onClick={this.unauthenticate}>
-                        Выйти
-                    </Button>
-                </div>
-            </StyledToolbar>
+            <div className={header}>
+                <AppBar className={appBar}>
+                    <Toolbar className={toolbar}>
+                        <Logo />
+                        <div>
+                            <Link to='/map' className='link'>
+                                <Button>
+                                    Карта
+                                </Button>
+                            </Link>
+                            <Link to='/profile' className='link'>
+                                <Button>
+                                    Профиль
+                                </Button>
+                            </Link>
+                            <Button onClick={this.unauthenticate}>
+                                Выйти
+                            </Button>
+                        </div>
+                    </Toolbar>
+                </AppBar>
+            </div>
         );
     }
 }
+
+export default withStyles(styles)(Header);
 
 export const HeaderWithConnect = connect(
     null,
     { logout }
 )
-(Header);
-
-const StyledToolbar = styled(Toolbar)({
-    height: '70px',
-    justifyContent: 'space-between'
-});
+(withStyles(styles)(Header));

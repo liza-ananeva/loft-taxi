@@ -1,7 +1,18 @@
 import React, { PureComponent } from 'react';
 import mapboxgl from 'mapbox-gl';
+import { withStyles } from '@material-ui/core';
 
-export class Map extends PureComponent {
+const styles = theme => ({
+    map: {
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0
+    }
+});
+
+class Map extends PureComponent {
     map = null;
     mapContainer = React.createRef();
 
@@ -21,10 +32,13 @@ export class Map extends PureComponent {
     }
 
     render() {
+        const { map } = this.props.classes;
         return (
             <div className='wrapper'>
-                <div className='map' ref={this.mapContainer} />
+                <div className={map} ref={this.mapContainer} />
             </div>
         );
     }
 }
+
+export default withStyles(styles)(Map);
