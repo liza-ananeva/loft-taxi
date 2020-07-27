@@ -8,9 +8,12 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import { theme } from 'loft-taxi-mui-theme';
 import './assets/style/index.scss';
 import * as serviceWorker from './serviceWorker';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 ReactDOM.render(
     <React.StrictMode>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <MuiThemeProvider theme={theme}>
             <BrowserRouter>
                 <Provider store={store}>
@@ -18,6 +21,7 @@ ReactDOM.render(
                 </Provider>
             </BrowserRouter>
         </MuiThemeProvider>
+        </MuiPickersUtilsProvider>
     </React.StrictMode>,
     document.getElementById('root')
 );

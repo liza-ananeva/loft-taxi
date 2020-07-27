@@ -1,0 +1,5 @@
+const STORE_TYPE = 'card';
+
+export const SAVE_CARD = `${STORE_TYPE}/SAVE_CARD`;
+export const SAVE_CARD_SUCCESS = `${STORE_TYPE}/SAVE_CARD_SUCCESS`;
+export const SAVE_CARD_FAILURE = `${STORE_TYPE}/SAVE_CARD_FAILURE`;

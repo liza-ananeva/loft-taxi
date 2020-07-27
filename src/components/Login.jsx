@@ -1,72 +1,94 @@
 import React, { PureComponent } from 'react';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { getIsLoggedIn } from '../modules/auth/selectors';
 import { login } from '../modules/auth/actions';
-import { getIsLoggedIn, getUser } from '../modules/auth/selectors';
-import { Grid, Paper, Typography, Link, TextField, Button } from '@material-ui/core';
+import { Redirect, Link } from 'react-router-dom';
+import {
+    Grid,
+    Paper,
+    Typography,
+    TextField,
+    Button,
+} from '@material-ui/core';
 import { Logo } from 'loft-taxi-mui-theme';
 import { withStyles } from '@material-ui/core';
 
-const styles = theme => ({
+const styles = (theme) => ({
     login: {
-        display: 'flex'
+        display: 'flex',
     },
     grid: {
-        width: '269.25px'
+        width: '269.25px',
     },
     paper: {
         width: '380px',
         height: '295px',
-        padding: '44px 60px'
+        padding: '44px 60px',
     },
     form: {
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
     },
     title: {
-        marginBottom: '30px'
+        marginBottom: '30px',
     },
     subtitle: {
-        marginBottom: '10px'
+        marginBottom: '10px',
+    },
+    link: {
+        color: '#1473e6',
+        cursor: 'pointer',
+        textDecoration: 'none',
+        '&:hover': {
+            textDecoration: 'underline'
+        }
     },
     textfield: {
-        marginBottom: '30px'
+        marginBottom: '30px',
     },
     button: {
         padding: '6px 16px',
         backgroundColor: '#ffc617',
-        marginLeft: 'auto'
-    }
+        marginLeft: 'auto',
+    },
 });
 
 class Login extends PureComponent {
-    // state = {
-    //     email: '',
-    //     password: ''
-    // }
+    state = {
+        email: '',
+        password: '',
+    };
 
     authenticate = (event) => {
         event.preventDefault();
-        
-        // const { email, password } = this.props;
-        const { user } = this.props;
+
         const { login } = this.props;
-        
-        // login({email, password});
-        login(user);
-    }
+
+        login(this.state);
+    };
 
     handleChange = (event) => {
-        // this.setState({ [event.target.name]: event.target.value });
-        const { user } = this.props;
-        user[event.target.name] = event.target.value;
-    }
+        const {
+            target: { name, value },
+        } = event;
+        this.setState({ [name]: value });
+    };
 
     render() {
         const { isLoggedIn } = this.props;
-        const { user } = this.props;
-        const { login, grid, paper, form, title, subtitle, textfield, button } = this.props.classes;
-        
+        const { email, password } = this.state;
+        const {
+            login,
+            grid,
+            paper,
+            form,
+            title,
+            subtitle,
+            link,
+            textfield,
+            button,
+        } = this.props.classes;
+
         return isLoggedIn ? (
             <Redirect to='/map' />
         ) : (
@@ -78,33 +100,43 @@ class Login extends PureComponent {
                         </Grid>
                         <Grid item xs={3} className={grid}>
                             <Paper className={paper} elevation={1}>
-                                <form className={form} onSubmit={this.authenticate}>
+                                <form
+                                    className={form}
+                                    onSubmit={this.authenticate}
+                                >
                                     <Typography className={title} variant='h4'>
                                         Войти
                                     </Typography>
-                                    <Typography className={subtitle} variant='body1'>
+                                    <Typography
+                                        className={subtitle}
+                                        variant='body1'
+                                    >
                                         Новый пользователь?{' '}
-                                        <Link>Зарегистрируйтесь</Link>
+                                        <Link to='/signup' className={link}>Зарегистрируйтесь</Link>
                                     </Typography>
                                     <TextField
                                         required
                                         label='Имя пользователя'
                                         type='email'
                                         name='email'
-                                        value={user.email}
+                                        value={email}
                                         onChange={this.handleChange}
                                         className={textfield}
+                                        // helperText='Неверный логин'
                                     />
                                     <TextField
                                         required
                                         label='Пароль'
                                         type='password'
                                         name='password'
-                                        value={user.password}
+                                        value={password}
                                         onChange={this.handleChange}
                                         className={textfield}
+                                        // helperText='Неправильный пароль'
                                     />
-                                    <Button type='submit' className={button}>Войти</Button>
+                                    <Button type='submit' className={button}>
+                                        Войти
+                                    </Button>
                                 </form>
                             </Paper>
                         </Grid>
@@ -117,12 +149,7 @@ class Login extends PureComponent {
 
 export default withStyles(styles)(Login);
 
-const mapAuthStateToProps = (state) => ({
-    isLoggedIn: getIsLoggedIn(state),
-    user: getUser(state)
-});
-
 export const LoginWithConnect = connect(
-    mapAuthStateToProps,
+    (state) => ({ isLoggedIn: getIsLoggedIn(state) }),
     { login }
 )(withStyles(styles)(Login));

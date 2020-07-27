@@ -1,67 +1,191 @@
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
+import { getIsLoggedIn } from '../modules/auth/selectors';
+import { Redirect, Link } from 'react-router-dom';
+import { Grid, Paper, Typography, TextField, Button } from '@material-ui/core';
+import { Logo } from 'loft-taxi-mui-theme';
+import { withStyles } from '@material-ui/core';
+
+const styles = (theme) => ({
+    signup: {
+        display: 'flex',
+    },
+    grid: {
+        width: '269.25px',
+    },
+    paper: {
+        width: '380px',
+        height: '437px',
+        padding: '44px 60px',
+    },
+    gridForm: {
+        display: 'flex',
+        flexWrap: 'wrap'
+        // flexDirection: 'column'
+    },
+    title: {
+        marginBottom: '30px',
+    },
+    subtitle: {
+        marginBottom: '10px',
+    },
+    link: {
+        color: '#1473e6',
+        cursor: 'pointer',
+        textDecoration: 'none',
+        '&:hover': {
+            textDecoration: 'underline',
+        },
+    },
+    textfield: {
+        marginBottom: '30px',
+    },
+    button: {
+        padding: '6px 16px',
+        backgroundColor: '#ffc617',
+        // marginLeft: 'auto'
+    },
+});
 
 class Signup extends PureComponent {
     state = {
         email: '',
         firstName: '',
         lastName: '',
-        password: ''
-    }
+        password: '',
+    };
 
     handleSubmit = (event) => {
         event.preventDefault();
-        this.props.navigateTo('map');
-    }
+    };
 
     handleChange = (event) => {
-        this.setState({ [event.target.name]: event.target.value });
-    }
+        const {
+            target: { name, value },
+        } = event;
+        this.setState({ [name]: value });
+    };
 
     render() {
+        const { isLoggedIn } = this.props;
         const { email, firstName, lastName, password } = this.state;
+        const {
+            signup,
+            grid,
+            paper,
+            gridForm,
+            title,
+            subtitle,
+            link,
+            textfield,
+            button,
+        } = this.props.classes;
 
-        return (
-            <form onSubmit={this.handleSubmit}>
-                <label>
-                    Адрес электронной почты
-                    <input
-                        type='email'
-                        name='email'
-                        value={email}
-                        onChange={this.handleChange}
-                    />
-                </label>
-                <label>
-                    Имя
-                    <input
-                        type='text'
-                        name='firstName'
-                        value={firstName}
-                        onChange={this.handleChange}
-                    />
-                </label>
-                <label>
-                    Фамилия
-                    <input
-                        type='text'
-                        name='lastName'
-                        value={lastName}
-                        onChange={this.handleChange}
-                    />
-                </label>
-                <label>
-                    Пароль
-                    <input
-                        type='password'
-                        name='password'
-                        value={password}
-                        onChange={this.handleChange}
-                    />
-                </label>
-                <button type='submit'>Войти</button>
-            </form>
+        return isLoggedIn ? (
+            <Redirect to='/map' />
+        ) : (
+            <div className='wrapper'>
+                <section className={signup}>
+                    <Grid container alignItems='center' justify='center'>
+                        <Grid item xs={3} className={grid}>
+                            <Logo />
+                        </Grid>
+                        <Grid item xs={3} className={grid}>
+                            <Paper className={paper} elevation={1}>
+                                <form
+                                    onSubmit={this.handleSubmit}
+                                >
+                                    <Grid container spacing={2} className={gridForm}>
+                                        <Grid item>
+                                            <Typography
+                                                className={title}
+                                                variant='h4'
+                                            >
+                                                Регистрация
+                                            </Typography>
+                                            <Typography
+                                                className={subtitle}
+                                                variant='body1'
+                                            >
+                                                Уже зарегистрированы?{' '}
+                                                <Link
+                                                    to='/login'
+                                                    className={link}
+                                                >
+                                                    Войти
+                                                </Link>
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <TextField
+                                                required
+                                                label='Адрес электронной почты'
+                                                type='email'
+                                                name='email'
+                                                value={email}
+                                                onChange={this.handleChange}
+                                                className={textfield}
+                                                fullWidth
+                                            />
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                required
+                                                label='Имя'
+                                                type='string'
+                                                name='firstName'
+                                                value={firstName}
+                                                onChange={this.handleChange}
+                                                className={textfield}
+                                                fullWidth
+                                            />
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                required
+                                                label='Фамилия'
+                                                type='string'
+                                                name='lastName'
+                                                value={lastName}
+                                                onChange={this.handleChange}
+                                                className={textfield}
+                                                fullWidth
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <TextField
+                                                required
+                                                label='Пароль'
+                                                type='password'
+                                                name='password'
+                                                value={password}
+                                                onChange={this.handleChange}
+                                                className={textfield}
+                                                fullWidth
+                                            />
+                                        </Grid>
+                                        <Grid item style={{display: 'flex'}} justify='flex-end' xs={12}>
+                                            <Button
+                                                type='submit'
+                                                className={button}
+                                            >
+                                                Войти
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+                                </form>
+                            </Paper>
+                        </Grid>
+                    </Grid>
+                </section>
+            </div>
         );
     }
 }
 
-export default Signup;
+export default withStyles(styles)(Signup);
+
+// export const SignupWithConnect = connect(
+//     (state) => ({ isLoggedIn: getIsLoggedIn(state) }),
+//     { login }
+// )(withStyles(styles)(Signup));
