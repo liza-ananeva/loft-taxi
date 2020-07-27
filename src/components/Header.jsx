@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { logout } from '../modules/auth/actions';
 import { Link } from 'react-router-dom';
@@ -17,20 +17,22 @@ const styles = theme => ({
     toolbar: {
         height: '100%',
         justifyContent: 'space-between'
+    },
+    link: {
+        textDecoration: 'none'
     }
 });
 
-class Header extends PureComponent {
+class Header extends Component {
     unauthenticate = (event) => {
         event.preventDefault();
-        
         const { logout } = this.props;
         
         logout();
     }
 
     render() {
-        const { header, appBar, toolbar } = this.props.classes;
+        const { header, appBar, toolbar, link } = this.props.classes;
 
         return (
             <div className={header}>
@@ -38,12 +40,12 @@ class Header extends PureComponent {
                     <Toolbar className={toolbar}>
                         <Logo />
                         <div>
-                            <Link to='/map' className='link'>
+                            <Link to='/map' className={link}>
                                 <Button>
                                     Карта
                                 </Button>
                             </Link>
-                            <Link to='/profile' className='link'>
+                            <Link to='/profile' className={link}>
                                 <Button>
                                     Профиль
                                 </Button>

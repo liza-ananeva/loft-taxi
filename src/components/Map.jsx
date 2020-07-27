@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import mapboxgl from 'mapbox-gl';
 import { withStyles } from '@material-ui/core';
 
@@ -12,7 +12,7 @@ const styles = theme => ({
     }
 });
 
-class Map extends PureComponent {
+class Map extends Component {
     map = null;
     mapContainer = React.createRef();
 
@@ -23,7 +23,7 @@ class Map extends PureComponent {
             container: this.mapContainer.current,
             style: 'mapbox://styles/mapbox/streets-v11',
             center: [37.62, 55.75],
-            zoom: 12,
+            zoom: 12
         });
     }
 
@@ -33,6 +33,7 @@ class Map extends PureComponent {
 
     render() {
         const { map } = this.props.classes;
+        
         return (
             <div className='wrapper'>
                 <div className={map} ref={this.mapContainer} />

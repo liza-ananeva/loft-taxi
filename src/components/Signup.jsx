@@ -1,58 +1,56 @@
-import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
-import { getIsLoggedIn } from '../modules/auth/selectors';
+import React, { Component } from 'react';
+// import { connect } from 'react-redux';
+// import { getIsLoggedIn } from '../modules/auth/selectors';
 import { Redirect, Link } from 'react-router-dom';
 import { Grid, Paper, Typography, TextField, Button } from '@material-ui/core';
 import { Logo } from 'loft-taxi-mui-theme';
 import { withStyles } from '@material-ui/core';
 
 const styles = (theme) => ({
-    signup: {
-        display: 'flex',
+    signupSection: {
+        display: 'flex'
     },
     grid: {
-        width: '269.25px',
+        width: '269.25px'
     },
     paper: {
         width: '380px',
         height: '437px',
-        padding: '44px 60px',
+        padding: '44px 60px'
     },
     gridForm: {
         display: 'flex',
         flexWrap: 'wrap'
-        // flexDirection: 'column'
     },
     title: {
-        marginBottom: '30px',
+        marginBottom: '30px'
     },
     subtitle: {
-        marginBottom: '10px',
+        marginBottom: '10px'
     },
     link: {
         color: '#1473e6',
         cursor: 'pointer',
         textDecoration: 'none',
         '&:hover': {
-            textDecoration: 'underline',
-        },
+            textDecoration: 'underline'
+        }
     },
     textfield: {
-        marginBottom: '30px',
+        marginBottom: '30px'
     },
     button: {
         padding: '6px 16px',
-        backgroundColor: '#ffc617',
-        // marginLeft: 'auto'
-    },
+        backgroundColor: '#ffc617'
+    }
 });
 
-class Signup extends PureComponent {
+class Signup extends Component {
     state = {
         email: '',
         firstName: '',
         lastName: '',
-        password: '',
+        password: ''
     };
 
     handleSubmit = (event) => {
@@ -61,7 +59,7 @@ class Signup extends PureComponent {
 
     handleChange = (event) => {
         const {
-            target: { name, value },
+            target: { name, value }
         } = event;
         this.setState({ [name]: value });
     };
@@ -70,7 +68,7 @@ class Signup extends PureComponent {
         const { isLoggedIn } = this.props;
         const { email, firstName, lastName, password } = this.state;
         const {
-            signup,
+            signupSection,
             grid,
             paper,
             gridForm,
@@ -78,14 +76,14 @@ class Signup extends PureComponent {
             subtitle,
             link,
             textfield,
-            button,
+            button
         } = this.props.classes;
 
         return isLoggedIn ? (
             <Redirect to='/map' />
         ) : (
             <div className='wrapper'>
-                <section className={signup}>
+                <section className={signupSection}>
                     <Grid container alignItems='center' justify='center'>
                         <Grid item xs={3} className={grid}>
                             <Logo />
@@ -187,5 +185,5 @@ export default withStyles(styles)(Signup);
 
 // export const SignupWithConnect = connect(
 //     (state) => ({ isLoggedIn: getIsLoggedIn(state) }),
-//     { login }
+//     { signup }
 // )(withStyles(styles)(Signup));

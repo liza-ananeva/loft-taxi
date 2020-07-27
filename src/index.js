@@ -5,22 +5,22 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import { MuiThemeProvider } from '@material-ui/core/styles';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 import { theme } from 'loft-taxi-mui-theme';
 import './assets/style/index.scss';
 import * as serviceWorker from './serviceWorker';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
 
 ReactDOM.render(
     <React.StrictMode>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <MuiThemeProvider theme={theme}>
-            <BrowserRouter>
-                <Provider store={store}>
-                    <App />
-                </Provider>
-            </BrowserRouter>
-        </MuiThemeProvider>
+            <MuiThemeProvider theme={theme}>
+                <BrowserRouter>
+                    <Provider store={store}>
+                        <App />
+                    </Provider>
+                </BrowserRouter>
+            </MuiThemeProvider>
         </MuiPickersUtilsProvider>
     </React.StrictMode>,
     document.getElementById('root')

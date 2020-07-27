@@ -10,13 +10,11 @@ const initialState = {
 const auth = (state = initialState, action) => {
     switch (action.type) {
         case constants.LOGIN:
-            console.log('LOGIN');
             return {
                 ...state,
                 isLoading: true
             };
         case constants.LOGIN_SUCCESS:
-            console.log('LOGIN_SUCCESS');
             localStorage.setItem('user', JSON.stringify(action.payload));
             return {
                 ...state,
@@ -25,7 +23,6 @@ const auth = (state = initialState, action) => {
                 isLoading: false
             };
         case constants.LOGIN_FAILURE:
-            console.log('LOGIN_FAILURE');
             return {
                 ...state,
                 isLoggedIn: false,
@@ -33,7 +30,6 @@ const auth = (state = initialState, action) => {
                 isLoading: false
             };
         case constants.LOGOUT:
-            console.log('LOGOUT');
             localStorage.removeItem('user');
             return {
                 ...state,

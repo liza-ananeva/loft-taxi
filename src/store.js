@@ -1,4 +1,4 @@
-import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
+import { combineReducers, createStore, compose, applyMiddleware } from 'redux';
 import authReducer from './modules/auth';
 import cardReducer from './modules/card';
 import { authMiddleware } from './modules/auth/authMiddleware';

@@ -1,68 +1,61 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { saveCard } from '../modules/card/actions';
-import {
-    Grid,
-    Paper,
-    Typography,
-    Card,
-    Box,
-    TextField,
-    Button,
-} from '@material-ui/core';
+import { Grid, Paper, Typography, Card, Box, TextField, Button } from '@material-ui/core';
 import { MCIcon } from 'loft-taxi-mui-theme';
 import { DatePicker } from '@material-ui/pickers';
 import { withStyles } from '@material-ui/core';
 
 const styles = (theme) => ({
     profile: {
-        display: 'flex',
+        display: 'flex'
     },
     grid: {
         width: '752px',
         height: '553px',
-        display: 'flex',
+        display: 'flex'
     },
     paper: {
         height: '369px',
         backgroundColor: '#fff',
         padding: '44px 60px',
-        margin: 'auto 0',
+        margin: 'auto 0'
     },
     subtitle: {
-        marginBottom: '40px',
+        marginBottom: '40px'
     },
     card: {
         width: '236px',
         height: '157px',
         padding: '16px 32px',
-        position: 'relative',
+        position: 'relative'
     },
     box: {
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-around',
+        justifyContent: 'space-around'
     },
     button: {
         backgroundColor: '#ffc617',
         padding: '6px 16px',
         marginTop: '41px',
-        marginLeft: '8px',
-    },
+        marginLeft: '8px'
+    }
 });
 
-class Profile extends PureComponent {
+class Profile extends Component {
     state = {
         cardNumber: '',
-        validThru: '',
+        validThru: new Date(),
         cardholderName: '',
-        cvc: ''
+        cvc: '',
+        touchedCardNumber: false,
+        touchedCardholderName: false
     }
 
     handleSubmit = (event) => {
         event.preventDefault();
-        
         const { saveCard } = this.props;
         
         saveCard(this.state);
@@ -75,7 +68,29 @@ class Profile extends PureComponent {
         this.setState({ [name]: value });
     };
 
+    handleDate = (date) => {
+        this.setState({ validThru: date });
+    };
+
+    handleBlur = (event) => {
+        const {
+          target: { name }
+        } = event;
+
+        name === 'cardNumber'
+            ? this.setState({ touchedCardNumber: true })
+            : this.setState({ touchedCardholderName: true });
+    };
+
     render() {
+        const {
+            cardNumber,
+            validThru,
+            cardholderName,
+            cvc,
+            touchedCardNumber,
+            touchedCardholderName
+        } = this.state;
         const {
             profile,
             grid,
@@ -83,10 +98,8 @@ class Profile extends PureComponent {
             subtitle,
             card,
             box,
-            button,
+            button
         } = this.props.classes;
-
-        const { cardNumber, validThru, cardholderName, cvc } = this.state;
 
         return (
             <div className='wrapper'>
@@ -128,28 +141,22 @@ class Profile extends PureComponent {
                                                                 name='cardNumber'
                                                                 value={cardNumber}
                                                                 onChange={this.handleChange}
-                                                                // helperText='Это обязательное поле'
+                                                                onBlur={this.handleBlur}
+                                                                error={!cardNumber && touchedCardNumber}
+                                                                helperText={!cardNumber && touchedCardNumber && 'Это обязательное поле'}
                                                             />
-                                                            {/* <TextField
-                                                                required
-                                                                label='Срок действия'
-                                                                type='number'
-                                                                name='validThru'
-                                                                value={validThru}
-                                                                onChange={this.handleChange}
-                                                            /> */}
                                                             <DatePicker
                                                                 label='Срок действия'
-                                                                type='string'
                                                                 name='validThru'
                                                                 value={validThru}
-                                                                onChange={this.handleChange}
+                                                                onChange={this.handleDate}
                                                                 format='MM/yy'
                                                                 views={['year', 'month']}
                                                                 openTo='year'
-                                                                clearLabel
-                                                                cancelLabel
-                                                                okLabel
+                                                                disablePast
+                                                                clearable
+                                                                cancelLabel={<span>Cancel</span>}
+                                                                okLabel={<span>OK</span>}
                                                             />
                                                         </Box>
                                                     </Card>
@@ -168,7 +175,9 @@ class Profile extends PureComponent {
                                                                 name='cardholderName'
                                                                 value={cardholderName}
                                                                 onChange={this.handleChange}
-                                                                // helperText='Это обязательное поле'
+                                                                onBlur={this.handleBlur}
+                                                                error={!cardholderName && touchedCardholderName}
+                                                                helperText={!cardholderName && touchedCardholderName && 'Это обязательное поле'}
                                                             />
                                                             <TextField
                                                                 required

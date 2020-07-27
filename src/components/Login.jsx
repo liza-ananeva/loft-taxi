@@ -1,39 +1,33 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getIsLoggedIn } from '../modules/auth/selectors';
 import { login } from '../modules/auth/actions';
 import { Redirect, Link } from 'react-router-dom';
-import {
-    Grid,
-    Paper,
-    Typography,
-    TextField,
-    Button,
-} from '@material-ui/core';
+import { Grid, Paper, Typography, TextField, Button } from '@material-ui/core';
 import { Logo } from 'loft-taxi-mui-theme';
 import { withStyles } from '@material-ui/core';
 
 const styles = (theme) => ({
-    login: {
-        display: 'flex',
+    loginSection: {
+        display: 'flex'
     },
     grid: {
-        width: '269.25px',
+        width: '269.25px'
     },
     paper: {
         width: '380px',
         height: '295px',
-        padding: '44px 60px',
+        padding: '44px 60px'
     },
     form: {
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: 'column'
     },
     title: {
-        marginBottom: '30px',
+        marginBottom: '30px'
     },
     subtitle: {
-        marginBottom: '10px',
+        marginBottom: '10px'
     },
     link: {
         color: '#1473e6',
@@ -44,41 +38,52 @@ const styles = (theme) => ({
         }
     },
     textfield: {
-        marginBottom: '30px',
+        marginBottom: '30px'
     },
     button: {
         padding: '6px 16px',
         backgroundColor: '#ffc617',
-        marginLeft: 'auto',
-    },
+        marginLeft: 'auto'
+    }
 });
 
-class Login extends PureComponent {
+class Login extends Component {
     state = {
         email: '',
         password: '',
+        touchedEmail: false,
+        touchedPassword: false
     };
 
     authenticate = (event) => {
         event.preventDefault();
-
         const { login } = this.props;
-
+        
         login(this.state);
     };
 
     handleChange = (event) => {
         const {
-            target: { name, value },
+            target: { name, value }
         } = event;
         this.setState({ [name]: value });
     };
 
+    handleBlur = (event) => {
+        const {
+          target: { name }
+        } = event;
+
+        name === 'email'
+            ? this.setState({ touchedEmail: true })
+            : this.setState({ touchedPassword: true });
+    };
+
     render() {
         const { isLoggedIn } = this.props;
-        const { email, password } = this.state;
+        const { email, password, touchedEmail, touchedPassword } = this.state;
         const {
-            login,
+            loginSection,
             grid,
             paper,
             form,
@@ -86,14 +91,14 @@ class Login extends PureComponent {
             subtitle,
             link,
             textfield,
-            button,
+            button
         } = this.props.classes;
 
         return isLoggedIn ? (
             <Redirect to='/map' />
         ) : (
             <div className='wrapper'>
-                <section className={login}>
+                <section className={loginSection}>
                     <Grid container alignItems='center' justify='center'>
                         <Grid item xs={3} className={grid}>
                             <Logo />
@@ -121,8 +126,10 @@ class Login extends PureComponent {
                                         name='email'
                                         value={email}
                                         onChange={this.handleChange}
+                                        onBlur={this.handleBlur}
+                                        error={!email && touchedEmail}
+                                        helperText={!email && touchedEmail && 'Неверный логин'}
                                         className={textfield}
-                                        // helperText='Неверный логин'
                                     />
                                     <TextField
                                         required
@@ -131,8 +138,10 @@ class Login extends PureComponent {
                                         name='password'
                                         value={password}
                                         onChange={this.handleChange}
+                                        onBlur={this.handleBlur}
+                                        error={!password && touchedPassword}
+                                        helperText={!password && touchedPassword && 'Неправильный пароль'}
                                         className={textfield}
-                                        // helperText='Неправильный пароль'
                                     />
                                     <Button type='submit' className={button}>
                                         Войти

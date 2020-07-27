@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getIsLoggedIn } from './modules/auth/selectors';
 import PropTypes from 'prop-types';
@@ -10,10 +10,10 @@ import { ProfileWithConnect } from './components/Profile';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 
-class App extends PureComponent {
+class App extends Component {
     static propTypes = {
-        isLoggedIn: PropTypes.bool,
-    };
+        isLoggedIn: PropTypes.bool
+    }
 
     render() {
         const { isLoggedIn } = this.props;
@@ -23,17 +23,10 @@ class App extends PureComponent {
                 {isLoggedIn && <HeaderWithConnect />}
                 <main>
                     <Switch>
-                        <Route
-                            exact
-                            path='/login'
-                            component={LoginWithConnect}
-                        />
+                        <Route exact path='/login' component={LoginWithConnect} />
                         <Route exact path='/signup' component={Signup} />
                         <PrivateRoute path='/map' component={Map} />
-                        <PrivateRoute
-                            path='/profile'
-                            component={ProfileWithConnect}
-                        />
+                        <PrivateRoute path='/profile' component={ProfileWithConnect} />
                     </Switch>
                     <Redirect from='/' to='/login' />
                 </main>
