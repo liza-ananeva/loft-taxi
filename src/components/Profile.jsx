@@ -49,9 +49,7 @@ class Profile extends Component {
         cardNumber: '',
         validThru: new Date(),
         cardholderName: '',
-        cvc: '',
-        touchedCardNumber: false,
-        touchedCardholderName: false
+        cvc: ''
     }
 
     handleSubmit = (event) => {
@@ -66,31 +64,14 @@ class Profile extends Component {
             target: { name, value }
         } = event;
         this.setState({ [name]: value });
-    };
+    }
 
     handleDate = (date) => {
         this.setState({ validThru: date });
-    };
-
-    handleBlur = (event) => {
-        const {
-          target: { name }
-        } = event;
-
-        name === 'cardNumber'
-            ? this.setState({ touchedCardNumber: true })
-            : this.setState({ touchedCardholderName: true });
-    };
+    }
 
     render() {
-        const {
-            cardNumber,
-            validThru,
-            cardholderName,
-            cvc,
-            touchedCardNumber,
-            touchedCardholderName
-        } = this.state;
+        const { cardNumber, validThru, cardholderName, cvc } = this.state;
         const {
             profile,
             grid,
@@ -121,16 +102,9 @@ class Profile extends Component {
                                 <form onSubmit={this.handleSubmit}>
                                     <Grid container>
                                         <Grid item>
-                                            <Grid
-                                                container
-                                                justify='space-between'
-                                                spacing={4}
-                                            >
+                                            <Grid container justify='space-between' spacing={4}>
                                                 <Grid item>
-                                                    <Card
-                                                        className={card}
-                                                        elevation={3}
-                                                    >
+                                                    <Card elevation={3} className={card}>
                                                         <MCIcon />
                                                         <Box className={box}>
                                                             <TextField
@@ -141,11 +115,10 @@ class Profile extends Component {
                                                                 name='cardNumber'
                                                                 value={cardNumber}
                                                                 onChange={this.handleChange}
-                                                                onBlur={this.handleBlur}
-                                                                error={!cardNumber && touchedCardNumber}
-                                                                helperText={!cardNumber && touchedCardNumber && 'Это обязательное поле'}
+                                                                // helperText='Это обязательное поле'
                                                             />
                                                             <DatePicker
+                                                                required
                                                                 label='Срок действия'
                                                                 name='validThru'
                                                                 value={validThru}
@@ -157,15 +130,13 @@ class Profile extends Component {
                                                                 clearable
                                                                 cancelLabel={<span>Cancel</span>}
                                                                 okLabel={<span>OK</span>}
+                                                                // helperText='Это обязательное поле'
                                                             />
                                                         </Box>
                                                     </Card>
                                                 </Grid>
                                                 <Grid item>
-                                                    <Card
-                                                        className={card}
-                                                        elevation={3}
-                                                    >
+                                                    <Card elevation={3} className={card}>
                                                         <Box className={box}>
                                                             <TextField
                                                                 required
@@ -175,9 +146,7 @@ class Profile extends Component {
                                                                 name='cardholderName'
                                                                 value={cardholderName}
                                                                 onChange={this.handleChange}
-                                                                onBlur={this.handleBlur}
-                                                                error={!cardholderName && touchedCardholderName}
-                                                                helperText={!cardholderName && touchedCardholderName && 'Это обязательное поле'}
+                                                                // helperText='Это обязательное поле'
                                                             />
                                                             <TextField
                                                                 required
@@ -187,16 +156,14 @@ class Profile extends Component {
                                                                 name='cvc'
                                                                 value={cvc}
                                                                 onChange={this.handleChange}
+                                                                // helperText='Это обязательное поле'
                                                             />
                                                         </Box>
                                                     </Card>
                                                 </Grid>
                                             </Grid>
                                             <Grid align='center'>
-                                                <Button
-                                                    type='submit'
-                                                    className={button}
-                                                >
+                                                <Button type='submit' className={button}>
                                                     Сохранить
                                                 </Button>
                                             </Grid>

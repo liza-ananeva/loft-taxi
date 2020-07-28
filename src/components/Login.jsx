@@ -50,38 +50,26 @@ const styles = (theme) => ({
 class Login extends Component {
     state = {
         email: '',
-        password: '',
-        touchedEmail: false,
-        touchedPassword: false
-    };
+        password: ''
+    }
 
     authenticate = (event) => {
         event.preventDefault();
         const { login } = this.props;
         
         login(this.state);
-    };
+    }
 
     handleChange = (event) => {
         const {
             target: { name, value }
         } = event;
         this.setState({ [name]: value });
-    };
-
-    handleBlur = (event) => {
-        const {
-          target: { name }
-        } = event;
-
-        name === 'email'
-            ? this.setState({ touchedEmail: true })
-            : this.setState({ touchedPassword: true });
-    };
+    }
 
     render() {
         const { isLoggedIn } = this.props;
-        const { email, password, touchedEmail, touchedPassword } = this.state;
+        const { email, password } = this.state;
         const {
             loginSection,
             grid,
@@ -104,18 +92,12 @@ class Login extends Component {
                             <Logo />
                         </Grid>
                         <Grid item xs={3} className={grid}>
-                            <Paper className={paper} elevation={1}>
-                                <form
-                                    className={form}
-                                    onSubmit={this.authenticate}
-                                >
-                                    <Typography className={title} variant='h4'>
+                            <Paper elevation={1} className={paper}>
+                                <form onSubmit={this.authenticate} className={form}>
+                                    <Typography variant='h4' className={title}>
                                         Войти
                                     </Typography>
-                                    <Typography
-                                        className={subtitle}
-                                        variant='body1'
-                                    >
+                                    <Typography variant='body1' className={subtitle}>
                                         Новый пользователь?{' '}
                                         <Link to='/signup' className={link}>Зарегистрируйтесь</Link>
                                     </Typography>
@@ -126,9 +108,7 @@ class Login extends Component {
                                         name='email'
                                         value={email}
                                         onChange={this.handleChange}
-                                        onBlur={this.handleBlur}
-                                        error={!email && touchedEmail}
-                                        helperText={!email && touchedEmail && 'Неверный логин'}
+                                        // helperText='Неверный логин'
                                         className={textfield}
                                     />
                                     <TextField
@@ -138,9 +118,7 @@ class Login extends Component {
                                         name='password'
                                         value={password}
                                         onChange={this.handleChange}
-                                        onBlur={this.handleBlur}
-                                        error={!password && touchedPassword}
-                                        helperText={!password && touchedPassword && 'Неправильный пароль'}
+                                        // helperText='Неправильный пароль'
                                         className={textfield}
                                     />
                                     <Button type='submit' className={button}>

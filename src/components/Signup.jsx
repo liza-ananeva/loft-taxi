@@ -51,18 +51,18 @@ class Signup extends Component {
         firstName: '',
         lastName: '',
         password: ''
-    };
+    }
 
     handleSubmit = (event) => {
         event.preventDefault();
-    };
+    }
 
     handleChange = (event) => {
         const {
             target: { name, value }
         } = event;
         this.setState({ [name]: value });
-    };
+    }
 
     render() {
         const { isLoggedIn } = this.props;
@@ -89,27 +89,16 @@ class Signup extends Component {
                             <Logo />
                         </Grid>
                         <Grid item xs={3} className={grid}>
-                            <Paper className={paper} elevation={1}>
-                                <form
-                                    onSubmit={this.handleSubmit}
-                                >
+                            <Paper elevation={1} className={paper}>
+                                <form onSubmit={this.handleSubmit}>
                                     <Grid container spacing={2} className={gridForm}>
                                         <Grid item>
-                                            <Typography
-                                                className={title}
-                                                variant='h4'
-                                            >
+                                            <Typography variant='h4' className={title}>
                                                 Регистрация
                                             </Typography>
-                                            <Typography
-                                                className={subtitle}
-                                                variant='body1'
-                                            >
+                                            <Typography variant='body1' className={subtitle}>
                                                 Уже зарегистрированы?{' '}
-                                                <Link
-                                                    to='/login'
-                                                    className={link}
-                                                >
+                                                <Link to='/login' className={link}>
                                                     Войти
                                                 </Link>
                                             </Typography>
@@ -122,8 +111,8 @@ class Signup extends Component {
                                                 name='email'
                                                 value={email}
                                                 onChange={this.handleChange}
-                                                className={textfield}
                                                 fullWidth
+                                                className={textfield}
                                             />
                                         </Grid>
                                         <Grid item xs={6}>
@@ -134,8 +123,8 @@ class Signup extends Component {
                                                 name='firstName'
                                                 value={firstName}
                                                 onChange={this.handleChange}
-                                                className={textfield}
                                                 fullWidth
+                                                className={textfield}
                                             />
                                         </Grid>
                                         <Grid item xs={6}>
@@ -146,8 +135,8 @@ class Signup extends Component {
                                                 name='lastName'
                                                 value={lastName}
                                                 onChange={this.handleChange}
-                                                className={textfield}
                                                 fullWidth
+                                                className={textfield}
                                             />
                                         </Grid>
                                         <Grid item xs={12}>
@@ -158,15 +147,12 @@ class Signup extends Component {
                                                 name='password'
                                                 value={password}
                                                 onChange={this.handleChange}
-                                                className={textfield}
                                                 fullWidth
+                                                className={textfield}
                                             />
                                         </Grid>
                                         <Grid item style={{display: 'flex'}} justify='flex-end' xs={12}>
-                                            <Button
-                                                type='submit'
-                                                className={button}
-                                            >
+                                            <Button type='submit' className={button}>
                                                 Войти
                                             </Button>
                                         </Grid>
