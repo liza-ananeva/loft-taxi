@@ -1,58 +1,46 @@
 import * as constants from './constants';
 
 const initialState = {
-    isLoggedIn: !!localStorage.getItem('user'),
-    user: JSON.parse(localStorage.getItem('user')) || {},
+    addresses: [],
+    route: [],
     isLoading: false,
     error: null
 };
 
 export default function(state = initialState, action) {
     switch (action.type) {
-        case constants.LOGIN:
+        case constants.LOAD_ADDRESS_LIST:
             return {
                 ...state,
                 isLoading: true
             };
-        case constants.LOGIN_SUCCESS:
-            localStorage.setItem('user', JSON.stringify(action.payload));
+        case constants.LOAD_ADDRESS_LIST_SUCCESS:
             return {
                 ...state,
-                isLoggedIn: true,
-                user: action.payload,
+                addresses: action.payload,
                 isLoading: false
             };
-        case constants.LOGIN_FAILURE:
+        case constants.LOAD_ADDRESS_LIST_FAILURE:
             return {
                 ...state,
-                isLoggedIn: false,
                 error: action.payload,
                 isLoading: false
             };
-        case constants.LOGOUT:
-            localStorage.removeItem('user');
-            return {
-                ...state,
-                isLoggedIn: false,
-                user: {}
-            };
-        case constants.SIGNUP:
+        case constants.CREATE_ROUTE:
             return {
                 ...state,
                 isLoading: true
             };
-        case constants.SIGNUP_SUCCESS:
-            localStorage.setItem('user', JSON.stringify(action.payload));
+        case constants.CREATE_ROUTE_SUCCESS:
+            console.log('!!!', action.payload)
             return {
                 ...state,
-                isLoggedIn: true,
-                user: action.payload,
+                route: action.payload,
                 isLoading: false
             };
-        case constants.SIGNUP_FAILURE:
+        case constants.CREATE_ROUTE_FAILURE:
             return {
                 ...state,
-                isLoggedIn: false,
                 error: action.payload,
                 isLoading: false
             };

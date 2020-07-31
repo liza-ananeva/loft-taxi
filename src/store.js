@@ -1,16 +1,18 @@
-import { combineReducers, createStore, compose, applyMiddleware } from 'redux';
-import authReducer from './modules/auth';
-import cardReducer from './modules/card';
-import { authMiddleware } from './modules/auth/authMiddleware';
-import { cardMiddleware } from './modules/card/cardMiddleware';
+import { createStore, compose, applyMiddleware } from 'redux';
+import createSagaMiddleware from 'redux-saga';
 
-const rootReducer = combineReducers({ auth: authReducer, card: cardReducer });
+import rootReducer from './modules/root/reducer';
+import rootSaga from './modules/root/saga';
+
+const sagaMiddleware = createSagaMiddleware();
 
 export const store = createStore(
     rootReducer,
     compose(
-        applyMiddleware(authMiddleware),
-        applyMiddleware(cardMiddleware),
-        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+        applyMiddleware(sagaMiddleware),
+        window.__REDUX_DEVTOOLS_EXTENSION__ &&
+            window.__REDUX_DEVTOOLS_EXTENSION__()
     )
 );
+
+sagaMiddleware.run(rootSaga);

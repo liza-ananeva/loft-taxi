@@ -1,6 +1,12 @@
-const STORE_TYPE = 'auth';
+const STORE_TYPE_AUTH = 'auth';
 
-export const LOGIN = `${STORE_TYPE}/LOGIN`;
-export const LOGIN_SUCCESS = `${STORE_TYPE}/LOGIN_SUCCESS`;
-export const LOGIN_FAILURE = `${STORE_TYPE}/LOGIN_FAILURE`;
-export const LOGOUT = `${STORE_TYPE}/LOGOUT`;
+export const LOGIN = `${STORE_TYPE_AUTH}/LOGIN`;
+export const LOGIN_SUCCESS = `${STORE_TYPE_AUTH}/LOGIN_SUCCESS`;
+export const LOGIN_FAILURE = `${STORE_TYPE_AUTH}/LOGIN_FAILURE`;
+export const LOGOUT = `${STORE_TYPE_AUTH}/LOGOUT`;
+
+const STORE_TYPE_REG = 'register';
+
+export const SIGNUP = `${STORE_TYPE_REG}/SIGNUP`;
+export const SIGNUP_SUCCESS = `${STORE_TYPE_REG}/SIGNUP_SUCCESS`;
+export const SIGNUP_FAILURE = `${STORE_TYPE_REG}/SIGNUP_FAILURE`;

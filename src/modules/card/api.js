@@ -1,21 +1,19 @@
 import axios from '../../axios';
 
-export const serverLogin = async (user) => {
+export const serverSaveCard = async (card) => {
     const response = await axios({
         method: 'post',
-        url: 'auth',
-        data: user
+        url: 'card',
+        data: card
     });
   
     return response.data;
 }
 
-export const serverSignup = async (user) => {
+export const serverGetCard = async () => {
     const response = await axios({
-        method: 'post',
-        url: 'register',
-        data: user
+        method: 'get',
+        url: 'card?token=AUTH_TOKEN'
     });
-  
     return response.data;
 }

@@ -47,8 +47,8 @@ const styles = (theme) => ({
 class Profile extends Component {
     state = {
         cardNumber: '',
-        validThru: new Date(),
-        cardholderName: '',
+        expiryDate: new Date(),
+        cardName: '',
         cvc: ''
     }
 
@@ -67,11 +67,11 @@ class Profile extends Component {
     }
 
     handleDate = (date) => {
-        this.setState({ validThru: date });
+        this.setState({ expiryDate: date });
     }
 
     render() {
-        const { cardNumber, validThru, cardholderName, cvc } = this.state;
+        const { cardNumber, expiryDate, cardName, cvc } = this.state;
         const {
             profile,
             grid,
@@ -120,8 +120,8 @@ class Profile extends Component {
                                                             <DatePicker
                                                                 required
                                                                 label='Срок действия'
-                                                                name='validThru'
-                                                                value={validThru}
+                                                                name='expiryDate'
+                                                                value={expiryDate}
                                                                 onChange={this.handleDate}
                                                                 format='MM/yy'
                                                                 views={['year', 'month']}
@@ -143,8 +143,8 @@ class Profile extends Component {
                                                                 label='Имя владельца'
                                                                 placeholder='USER NAME'
                                                                 type='string'
-                                                                name='cardholderName'
-                                                                value={cardholderName}
+                                                                name='cardName'
+                                                                value={cardName}
                                                                 onChange={this.handleChange}
                                                                 // helperText='Это обязательное поле'
                                                             />

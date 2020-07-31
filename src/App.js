@@ -4,8 +4,8 @@ import { getIsLoggedIn } from './modules/auth/selectors';
 import PropTypes from 'prop-types';
 import { HeaderWithConnect } from './components/Header';
 import { LoginWithConnect } from './components/Login';
-import Signup from './components/Signup';
-import Map from './components/Map';
+import { SignupWithConnect } from './components/Signup';
+import { MapWithConnect } from './components/Map';
 import { ProfileWithConnect } from './components/Profile';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
@@ -24,8 +24,8 @@ class App extends Component {
                 <main>
                     <Switch>
                         <Route exact path='/login' component={LoginWithConnect} />
-                        <Route exact path='/signup' component={Signup} />
-                        <PrivateRoute path='/map' component={Map} />
+                        <Route exact path='/signup' component={SignupWithConnect} />
+                        <PrivateRoute path='/map' component={MapWithConnect} />
                         <PrivateRoute path='/profile' component={ProfileWithConnect} />
                     </Switch>
                     <Redirect from='/' to='/login' />

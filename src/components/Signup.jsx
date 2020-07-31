@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-// import { connect } from 'react-redux';
-// import { getIsLoggedIn } from '../modules/auth/selectors';
+import { connect } from 'react-redux';
+import { getIsLoggedIn } from '../modules/auth/selectors';
+import { signup } from '../modules/auth/actions';
 import { Redirect, Link } from 'react-router-dom';
 import { Grid, Paper, Typography, TextField, Button } from '@material-ui/core';
 import { Logo } from 'loft-taxi-mui-theme';
@@ -48,13 +49,16 @@ const styles = (theme) => ({
 class Signup extends Component {
     state = {
         email: '',
-        firstName: '',
-        lastName: '',
+        name: '',
+        surname: '',
         password: ''
     }
 
     handleSubmit = (event) => {
         event.preventDefault();
+        const { signup } = this.props;
+        
+        signup(this.state);
     }
 
     handleChange = (event) => {
@@ -66,7 +70,7 @@ class Signup extends Component {
 
     render() {
         const { isLoggedIn } = this.props;
-        const { email, firstName, lastName, password } = this.state;
+        const { email, name, surname, password } = this.state;
         const {
             signupSection,
             grid,
@@ -120,8 +124,8 @@ class Signup extends Component {
                                                 required
                                                 label='Имя'
                                                 type='string'
-                                                name='firstName'
-                                                value={firstName}
+                                                name='name'
+                                                value={name}
                                                 onChange={this.handleChange}
                                                 fullWidth
                                                 className={textfield}
@@ -132,8 +136,8 @@ class Signup extends Component {
                                                 required
                                                 label='Фамилия'
                                                 type='string'
-                                                name='lastName'
-                                                value={lastName}
+                                                name='surname'
+                                                value={surname}
                                                 onChange={this.handleChange}
                                                 fullWidth
                                                 className={textfield}
@@ -169,7 +173,7 @@ class Signup extends Component {
 
 export default withStyles(styles)(Signup);
 
-// export const SignupWithConnect = connect(
-//     (state) => ({ isLoggedIn: getIsLoggedIn(state) }),
-//     { signup }
-// )(withStyles(styles)(Signup));
+export const SignupWithConnect = connect(
+    (state) => ({ isLoggedIn: getIsLoggedIn(state) }),
+    { signup }
+)(withStyles(styles)(Signup));
